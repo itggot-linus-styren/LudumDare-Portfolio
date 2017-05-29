@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Ludum Dare Portfolio</title>
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+		<link href="./css/normalize.min.css" rel="stylesheet">
+		<link href="./css/style.css" rel="stylesheet">
+    </head>
+    <body>
+		<input type="checkbox" id="drawer-toggle" name="drawer-toggle"/>
+		<label for="drawer-toggle" class="do_ripple" data-ripple_colour="#a3f7b5" id="drawer-toggle-label"></label>
+        <div class="search">
+        </div>
+		<div id="scrim"></div>
+		<nav id="drawer">
+		  <div>LD Portfolio</div>
+	      <ul>
+              <li><a onclick="selectOpenAndClose(this, '#home-container')">All</a></li>
+              <li><a onclick="selectOpenAndClose(this, '#action-container')">Action</a></li>
+              <li><a onclick="selectOpenAndClose(this, '#strategy-container')">Strategy</a></li>
+              <li><a onclick="selectOpenAndClose(this, '#platformer-container')">Platformer</a></li>
+              <li><a onclick="selectOpenAndClose(this, '#puzzle-container')">Puzzle</a></li>
+      	  </ul>
+		</nav>
+        <div class="sticky-scroller">
+            <header>
+                <div>
+                    <h1>Ludum Dare Portfolio</h1>
+                </div>
+                <div class="search">
+                    <div class="searchbar closed">
+                        <a href="#" onclick="toggleSearch(true)"><img class="svg" src="./img/ic_search_black_24px.svg"><img></a>
+                        <div class="inner">
+                            <input id="game-search" type=text name=s autocomplete="off" placeholder="Search for game...">
+                            <ul class="search-results"></ul>
+                        </div>                
+                    </div>
+                    <a class="close" href="#" onclick="toggleSearch(false)"><img class="svg" src="./img/ic_close_black_24px.svg"></img></a>
+                    <div class="block"></div>
+                </div>
+            </header>
+            <div id="tabs">
+                <input class="home-container" type='radio' id='r1' name='t' checked>
+                <label class="do_ripple" data-ripple_colour="#f1f1f1" for='r1'>ALL</label>
+                <input class="action-container" type='radio' id='r2' name='t' checked>
+                <label class="do_ripple" data-ripple_colour="#f1f1f1" for='r2'>ACTION</label>
+                <input class="strategy-container" type='radio' id='r3' name='t'>
+                <label class="do_ripple" data-ripple_colour="#f1f1f1" for='r3'>STRATEGY</label>
+                <input class="platformer-container" type='radio' id='r4' name='t'>
+                <label class="do_ripple" data-ripple_colour="#f1f1f1" for='r4'>PLATFORMER</label>
+                <input class="puzzle-container" type='radio' id='r5' name='t'>
+                <label class="do_ripple" data-ripple_colour="#f1f1f1" for='r5'>PUZZLE</label>
+                <div id='slider'></div>
+            </div>
+            <div class="scroll-hack">
+				<div class="content" id="home-container">
+					<h1>Show all games in one place</h1>
+				</div>
+                <div class="content" id="action-container">
+                    <div class="game-miniature foobar-game">
+                        <h1>Foobar game</h1>
+                        <img src="./img/foobar.png">
+                    </div>
+                    <div class="game-miniature foobar-game">
+                        <h1>Foobar game</h1>
+                        <img src="./img/foobar.png">
+                    </div>
+                    <div class="game-miniature foobar-game">
+                        <h1>Foobar game</h1>
+                        <img src="./img/foobar.png">
+                    </div>
+                    <div class="game-miniature foobar-game">
+                        <h1>Foobar game</h1>
+                        <img src="./img/foobar.png">
+                    </div>
+                    <div id="foobar-game" class="game-article" data-article_name="Foobar Game">
+                        <h1>Content here!</h1>
+                    </div>
+                </div>
+                <div class="content" id="strategy-container">
+                    <div class="game-miniature bizbar-game">
+                        <h1>Bizbar game</h1>
+                        <img src="./img/bizbar.png">
+                    </div>
+                    <div class="game-miniature bizbar-game">
+                        <h1>Bizbar game</h1>
+                        <img src="./img/bizbar.png">
+                    </div>
+                    <div class="game-miniature bizbar-game">
+                        <h1>Bizbar game</h1>
+                        <img src="./img/bizbar.png">
+                    </div>
+                    <div class="game-miniature bizbar-game">
+                        <h1>Bizbar game</h1>
+                        <img src="./img/bizbar.png">
+                    </div>
+                    <div id="bizbar-game" class="game-article" data-article_name="Bizbar Game">
+                        <h1>Content here!</h1>
+                    </div>
+                </div>
+                <div class="content" id="platformer-container">
+                    <div class="game-miniature lorem-game">
+                        <h1>Lorem game</h1>
+                        <img src="./img/lorem.png">
+                    </div>
+                    <div class="game-miniature lorem-game">
+                        <h1>Lorem game</h1>
+                        <img src="./img/lorem.png">
+                    </div>
+                    <div class="game-miniature lorem-game">
+                        <h1>Lorem game</h1>
+                        <img src="./img/lorem.png">
+                    </div>
+                    <div class="game-miniature lorem-game">
+                        <h1>Lorem game</h1>
+                        <img src="./img/lorem.png">
+                    </div>
+                    <div id="lorem-game" class="game-article" data-article_name="Lorem Game">
+                        <h1>Content here!</h1>
+                    </div>
+                </div>
+                <div class="content" id="puzzle-container">
+                    <div class="game-miniature grillkorv-game">
+                        <h1>Grillkorv game</h1>
+                        <img src="./img/grillkorv.png">
+                    </div>
+                    <div class="game-miniature grillkorv-game">
+                        <h1>Grillkorv game</h1>
+                        <img src="./img/grillkorv.png">
+                    </div>
+                    <div class="game-miniature grillkorv-game">
+                        <h1>Grillkorv game</h1>
+                        <img src="./img/grillkorv.png">
+                    </div>
+                    <div class="game-miniature grillkorv-game">
+                        <h1>Grillkorv game</h1>
+                        <img src="./img/grillkorv.png">
+                    </div>
+                    <div id="grillkorv-game" class="game-article" data-article_name="Grillkorv Game">
+                        <h1>Content here!</h1>
+                    </div>
+                </div>
+            </div>
+		</div>
+        <script src="./js/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+		<script src="js/js.js"></script>
+    </body>
+</html>

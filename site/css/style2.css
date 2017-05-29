@@ -1,0 +1,370 @@
+html, body {
+    margin: 0;
+    padding: 0;    
+    font-family: 'Roboto', sans-serif;
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.scrim {
+    position: absolute;
+    opacity: 0;
+}
+
+header {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 75px;
+    background: #d7d7d7;
+    z-index: 1;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+header a {
+    outline: 0;
+}
+
+.searchbar {
+    display: flex;
+    flex-direction: row;
+    margin-right: 24px;
+    transition: transform 0.15s ease-in;
+}
+
+.searchbar > a {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    z-index: 3;
+}
+
+.searchbar > a > img {
+    opacity: 0;
+}
+
+.searchbar.closed {
+    transform: translateX(calc(100% - 24px));
+}
+
+.searchbar.closed ~ .close {
+    opacity: 0;
+    pointer-events: none;
+}
+
+header .svg {
+    fill: #909090;
+}
+
+header > .close {
+    position: absolute;
+    right: 24px;
+    left: calc(100% - 48px);
+    top: calc((100% - 24px) / 2 - 4px);
+    bottom: calc((100% - 24px) / 2 + 4px);
+}
+
+header > .block {
+    position: absolute;
+    background-color: #d7d7d7;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: calc(100% - 24px);
+    margin: 0;
+    padding: 0;
+    z-index: 2;
+}
+
+#drawer-toggle {
+    position: absolute;
+    opacity: 0;
+}
+
+.drawer {
+    width: 340px;
+    height: 100%;
+    display: flex;
+    z-index: 2;
+    background: #fafafa;
+    justify-content: flex-start;
+    flex-direction: column;
+    box-shadow: 0 0 16px #858585;
+}
+
+.drawer > h1 {
+    color: #909090;
+    font-size: 20px;
+    padding-left: 54px;
+    font-style: bold;
+    line-height: 0;
+    padding-top: 21px;
+    padding-bottom: 5px;
+}
+
+.drawer > ._hr {
+    padding-top: 8px;
+    padding-bottom: 8px; 
+}
+
+.drawer > ._hr > hr {
+    border: none;
+    height: 1px;
+    color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.drawer > ul {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    list-style-type: none;
+    flex-direction: column;
+    padding-left: 54px;
+}
+
+.drawer > ul > li {
+    padding-top: 8px;
+    padding-bottom: 8px; 
+}
+
+.drawer > ul > li > a {
+    color: #000;
+    text-decoration: none;
+    outline: 0;
+}
+
+.drawer > ul > li > a:not(.selected):hover {
+    color: #909090;
+}
+
+.drawer > ul > li > .selected {
+    color: #2196f3;
+}
+
+.content {
+    width: 100%;
+    overflow-y: auto;
+    margin-top: 75px;
+    margin-left: 24px;
+    padding-right: 24px;
+}
+
+.content > .wiki-article > img {
+    float: left;
+}
+
+.content h1 {
+    color: #909090;
+}
+
+.content h2 {
+    color: #a0a0a0;
+}
+
+.content p {
+    color: #959595;
+}
+
+#sandbox-container {
+    margin-left: 0;
+    padding-right: 0;
+}
+
+.canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.grid-canvas {
+    display: none;
+}
+
+#wiki-search {
+    background: transparent;
+    outline: 0;
+    color: white;
+    font-family: Roboto;
+    border: none;
+    border-bottom: 2px white solid;
+}
+
+#wiki-search::-webkit-input-placeholder {
+    color: #ffffff !important;
+    opacity: 0.85;
+}
+
+#wiki-search::-moz-placeholder {
+    color: #ffffff !important;
+    opacity: 0.85;
+}
+
+#wiki-search:-moz-placeholder {
+    color: #ffffff !important;
+    opacity: 0.85;
+}
+
+#wiki-search:-ms-input-placeholder {
+    color: #ffffff !important;
+    opacity: 0.85;
+}
+
+.inner {
+    padding-bottom: 1px;
+    border-bottom: 1px white solid;
+}
+
+.search-results {
+    -webkit-transition: all .25s ease;
+    -moz-transition: all .25s ease;
+    -ms-transition: all .25s ease;
+    -o-transition: all .25s ease;
+    transition: all .25s ease;
+    list-style-type: none;
+    position: absolute;
+    top: 32px;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    visibility:hidden;
+    border-radius: 3px;
+    text-indent: 10px;
+    line-height: 32px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    width: 140px;
+}
+
+.search-results a {
+  display: block;
+  color: #000;
+  text-decoration: none;
+}
+
+.search-results a:hover {
+  background: #e8e8e8;
+  color: #303030;
+}
+
+.search-results:hover,
+#wiki-search:focus ~ .search-results:not(:empty):not(.searched) {    
+  opacity: 1;
+  visibility:visible;
+  top: 42px;
+}
+
+.article-list > li > a {
+    text-decoration: none;
+    color: #000;
+    outline: 0;
+}
+
+.article-list > li > a:hover {
+    color: #909090;
+}
+
+.desktop-specific {
+    display: block;
+}
+
+.mobile-specific {
+    display: none;
+}
+
+@media screen and (device-width: 360px) and (device-height: 640px), screen and (device-height: 360px) and (device-width: 640px) {
+
+    .desktop-specific {
+        display: none !important;
+    }
+
+    .mobile-specific {
+        display: block !important;
+    }
+
+     #drawer-toggle-label {
+       align-self: flex-start;
+       display: inline-block;
+       -webkit-touch-callout: none;
+       -webkit-user-select: none;
+       -khtml-user-select: none;
+       -moz-user-select: none;
+       -ms-user-select: none;
+       user-select: none;
+       left: 0px;
+       height: 50px;
+       top: calc((75px - 50px) / 2);
+       width: 50px;
+       display: block;
+       position: fixed;
+       background: rgba(255, 255, 255, .0);
+       z-index: 3;
+     }
+ 
+     #drawer-toggle-label::before {
+       content: '';
+       display: block;
+       position: absolute;
+       height: 2px;
+       width: 24px;
+       background: #fafafa;
+       left: 13px;
+       top: 18px;
+       box-shadow: 0 6px 0 #fafafa, 0 12px 0 #fafafa;
+     }
+
+    .drawer {
+       transition: all 0.25s ease-out;
+       display: block;
+       position: fixed;
+       visibility: hidden;
+       top: 0;
+       left: 0;
+       bottom: 0;
+       height: 100%;
+       max-width: 320px;
+       width: calc(100vw - 56px);
+       overflow-x: hidden;
+       overflow-y: scroll;
+       z-index: 10;
+       -webkit-transform: translate3d(-100%, 0, 0);
+       translate3d(-100%, 0, 0);
+   }
+
+    #drawer-toggle:checked ~ #drawer-toggle-label {
+        height: 100%;
+        width: 100%;
+    }
+
+    #drawer-toggle:checked ~ .scrim {
+        z-index: 2;
+        opacity: 1;
+    }
+
+    #drawer-toggle:checked ~ .drawer {
+        visibility: visible;
+        -webkit-transform: translate3d(0, 0, 0);
+        translate3d(0, 0, 0); 
+    }
+
+    .scrim {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.54);
+        opacity: 0;
+        z-index: 2;
+        pointer-events: none;
+        transition: opacity 0.25s linear;
+    }
+
+}
