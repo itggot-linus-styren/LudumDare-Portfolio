@@ -30,7 +30,9 @@ for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
 
 /* Hide all containers and open home container on website load */
 $(function () {
-    $("#wiki-container").children ().slice (1).hide ();
+    for container in $(".game-container") {
+        container.children ().slice (1).hide ();
+    }
  
     hasLoadedArticles = true;
     $(".wiki-article").each (function () {

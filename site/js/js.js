@@ -6,8 +6,13 @@ var previousSelected;
 var hasLoadedArticles = false;
 var articles = {};
 
+var dontHideArticle = false;
+var overrideClick = false;
+
 $(function() {
-    $("#game-container").children().slice(1).hide();
+    $(".game-container").each(function (i, container) {
+        $(container).children ().slice (1).hide ();
+    });
 
     hasLoadedArticles = true;
     $(".game-article").each (function () {
@@ -74,6 +79,58 @@ $(function() {
              $("#drawer-toggle-label").addClass("do_ripple");
         }
     });
+
+    $('.back_arrow').click(function() {
+        console.log("clicked!");
+        setTimeout(function() {
+            $(".game-article").hide();
+        }, 500);
+        $(".game-article").each(function() {
+            $(this).prev().css('opacity', '0');
+            $(this).prev().hide();
+        });
+        var that = this;
+        $('#tabs input[type="radio"]').each(function(i, radio) {
+            if(radio.classList.contains($(that).parent().parent().attr('id'))) {
+                console.log(radio);
+                overrideClick = true;
+                $(radio).prop("checked", true);
+                $(radio).click();
+                //var container = $("#" + $(this).attr('class').split(" ")[0] + " > div:nth-of-type(1)");
+            }
+        });
+    });
+
+    $('.game-miniature > img').click(function() {
+        openArticle("#" + $(this).parent().attr('class').split(" ")[1]);
+    });
+
+    $('#tabs input[type="radio"]').click(function() {
+        if (!$(this).prop("checked") || (!overrideClick && $(previousItem).attr('class').split(" ")[0] === $(this).attr('class').split(" ")[0]))
+            return;
+
+        var container = $("#" + $(this).attr('class').split(" ")[0] + " > div:nth-of-type(1)");
+        $(container).show();
+        $(container).css('opacity', '1');
+        var that = this;
+        if ($(".sticky-scroller").scrollTop() > 0) {
+            var duration = Math.min(500 * $(".sticky-scroller").scrollTop() / 100, 400);
+            $(".sticky-scroller").animate({scrollTop:$(".sticky-scroller").offset().top}, duration, "linear", function() {
+                doTransition(that, true);
+            });
+        } else {
+            doTransition(that, true);
+        }
+        if (overrideClick) overrideClick = false;
+    });
+
+    $("#drawer > ul > li > div > a").on('click', function() {
+        var parentDiv = $(this).parent();
+        parentDiv.addClass('drawer_list_item_active');
+        setTimeout(function() {
+            parentDiv.removeClass('drawer_list_item_active');
+        }, 250);
+    });
 });
 
 function updateHeight() {
@@ -88,7 +145,8 @@ function updateHeight() {
 
 function doTransition(that, usingTabs) {
     var oldContentDiv = null;
-    if (previousItem != null) {
+    if (previousItem != null && !overrideClick) {
+        console.log("I HATE YOU!" + $(previousItem));
         var oldId = $(previousItem).attr('class').split(" ")[0];
 		oldContentDiv = $('#' + oldId);
         oldContentDiv.removeClass('content-hide-remove');
@@ -122,30 +180,37 @@ function doTransition(that, usingTabs) {
 	} else {
 		contentDiv.addClass('content-hide-remove-backwards');
 	}
+    if (!dontHideArticle) {
+        $(".games-container").show();
+        $(".game-article").each(function(i, article) {
+            if ($(article).is(":visible")) {
+                $(article).prev().hide();
+            }
+        });
+    }
     if (usingTabs) {
         setTimeout(function() {
-            if (oldContentDiv != null)
+            if (oldContentDiv != null && !overrideClick)
                 $(oldContentDiv).hide();
             $(contentDiv).removeClass('transition-container');
+            if (!dontHideArticle) {
+                $(".game-article").hide();
+            } else {
+                dontHideArticle = false;
+            }
         }, 500);   
         previousItem = that;
+    } else {
+        setTimeout(function() {
+            if (!dontHideArticle) {
+                $(".game-article").hide();
+            } else {
+                dontHideArticle = false;
+            }
+        }, 500);   
     }
 }
 
-$('#tabs input[type="radio"]').click(function() {
-    if (!$(this).is(':checked') || $(previousItem).attr('class').split(" ")[0] == $(this).attr('class').split(" ")[0])
-        return;
-
-    var that = this;
-    if ($(".sticky-scroller").scrollTop() > 0) {
-        var duration = Math.min(500 * $(".sticky-scroller").scrollTop() / 100, 400);
-        $(".sticky-scroller").animate({scrollTop:$(".sticky-scroller").offset().top}, duration, "linear", function() {
-            doTransition(that, true);
-        });
-    } else {
-        doTransition(that, true);
-    }
-});
 (function($) {
     $.fn.isAfter = function(sel){
         return this.prevAll().filter(sel).length !== 0;
@@ -155,13 +220,6 @@ $('#tabs input[type="radio"]').click(function() {
         return this.nextAll().filter(sel).length !== 0;
     };
 })(jQuery);
-$("#drawer > ul > li > div > a").on('click', function() {
-	var parentDiv = $(this).parent();
-    parentDiv.addClass('drawer_list_item_active');
-    setTimeout(function() {
-        parentDiv.removeClass('drawer_list_item_active');
-    }, 250);
-});
 
 function search () {
     var searchResults = $(".search-results > li");
@@ -181,6 +239,7 @@ function toggleSearch (toggle) {
 }
 
 function select (a) {
+    if (a === null) return;
     if (previousSelected == a) return;
     if (previousSelected != null) {
         $(previousSelected).removeClass ("selected");
@@ -191,8 +250,11 @@ function select (a) {
 
 function selectOpenAndClose(that, containerId) {
     $('#drawer-toggle').prop('checked', false);
-    if (prevContainerId == containerId)
+    $(containerId + " > div:nth-of-type(1)").show();
+    $(containerId + " > div:nth-of-type(1)").css('opacity', '1');
+    if (prevContainerId == containerId) {
         return;
+    }
     select(that);
 
     if (prevContainerId != null) {
@@ -210,6 +272,8 @@ function selectOpenAndClose(that, containerId) {
 	$(containerId).addClass('transition-container');
 	$(prevContainerId).css('opacity', '0');
 	$(containerId).css('opacity', '1');
+	$(containerId + " > div:nth-of-type(1)").show();
+	$(containerId + " > div:nth-of-type(1)").css('opacity', '1');
 
 	prevContainerId = containerId;
 
@@ -224,9 +288,22 @@ function selectOpenAndClose(that, containerId) {
 }
 
 function openArticle (articleId) {
-    openPage($(articleId)[0].parent().attr('id'));
-    $(".article").hide();
+    dontHideArticle = true;
+    setTimeout(function() {
+        $(".game-article:not(" + articleId + ")").hide();
+    }, 500);
+    $('#tabs input[type="radio"]').each(function(i, radio) {
+        if(radio.classList.contains($($(articleId)[0]).parent().attr('id'))) {
+            $(radio).prop("checked", true);
+            $(radio).click();
+        }
+    });
+    $(".game-article").each(function() {
+        $(this).prev().css('opacity', '0');
+        $(this).prev().hide();
+    });
     $(articleId).show();
+    console.log("article opened!");
 }
 
 /* Search wiki for searchTerm and bring up menu including the first five results */
@@ -291,7 +368,7 @@ $(function () {
 
 	var colour = "#ff84f3";
 	var opacity = 0.3;
-	var ripple_within_elements = ['input', 'button', 'a'];
+	var ripple_within_elements = ['button', 'a', 'img'];
 	var ripple_without_diameter = 50;
 
 	var overlays = {

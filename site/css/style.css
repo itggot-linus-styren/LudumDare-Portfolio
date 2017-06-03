@@ -47,7 +47,7 @@ header > .search {
     flex-grow: 1;
     display: flex;
     position: relative;
-    z-index: 1;
+    z-index: 6;
     align-items: center;
     justify-content: flex-end;
 }
@@ -280,7 +280,7 @@ header h1 {
     min-height: calc(100vh - 192px - 55px);
     height: auto;
     width: 100%;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-around;
     align-items: center;
     display: flex;
@@ -426,6 +426,73 @@ header h1 {
     top: calc(192px + 55px);
     left: 0;
     right: 0;
+}
+
+.games-container {
+    width: calc((250px + 40px) * 5);
+    height: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.game-miniature {
+    background-color: #d6d7d9;
+    box-shadow: 0 6px 10px 0 #323a45;
+    margin: 10px;
+    padding: 10px;
+}
+
+.game-miniature img:hover {
+    opacity: 0.3;
+    cursor: pointer;
+}
+
+.game-miniature h1 {
+    font-size: 24px;
+    color: #323a45;
+}
+
+.game-article {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+}
+
+.back_arrow > .svg {
+    fill: #323a45;
+}
+
+.article-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.aside-left, .aside-right {
+    width: 20vw;
+    padding: 24px;
+    background: #f1f1f1;
+    box-shadow: 0 10px 7px 0px #323a45;
+}
+
+.article-center {
+    width: 100%;
+    padding: 24px;
+    margin-left: 50px;
+    margin-right: 50px;
+    text-align: center;
+    background: #f1f1f1;
+    box-shadow: 0 10px 7px 0px #323a45;
+}
+
+.article-center p {
+    text-align: center;
+}
+
+.article-center img {
+    float: right;
+    padding: 5px;
 }
 
 .target-pc {
@@ -588,6 +655,17 @@ header h1 {
 		translate3d(0, 0, 0); 
 	}
 
+    .games-container {
+        width: calc((250px + 40px) * 1);
+        height: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+    }
+
+    .aside-left, .aside-right {
+        display: none;
+    }
+
     .target-pc {
         display: none;
     }
@@ -694,7 +772,19 @@ and (orientation : landscape) {
 		font-size: 16px;
 		color: #323a45;
     }
- 
+
+
+    .games-container {
+        width: calc((250px + 40px) * 2);
+        height: 100%;
+        display: flex;
+        flex-flow: row wrap;
+    }
+
+    .aside-right {
+        display: none;
+    }
+
     .target-pc {
         display: none;
     }
