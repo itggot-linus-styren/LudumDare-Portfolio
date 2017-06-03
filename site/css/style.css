@@ -635,7 +635,7 @@ header h1 {
 	  background: #fff;
 	  overflow-x: hidden;
 	  overflow-y: scroll;
-	  padding: 16px
+	  padding: 16px;
 	  z-index: 10;
       -webkit-transform: translate3d(-100%, 0, 0);
 	  translate3d(-100%, 0, 0);
