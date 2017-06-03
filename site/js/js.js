@@ -101,7 +101,7 @@ $(function() {
         });
     });
 
-    $('.game-miniature > img').click(function() {
+    $('.game-miniature > i').click(function() {
         openArticle("#" + $(this).parent().attr('class').split(" ")[1]);
     });
 
@@ -368,7 +368,7 @@ $(function () {
 
 	var colour = "#ff84f3";
 	var opacity = 0.3;
-	var ripple_within_elements = ['button', 'a', 'img'];
+	var ripple_within_elements = ['button', 'a', 'i'];
 	var ripple_without_diameter = 50;
 
 	var overlays = {

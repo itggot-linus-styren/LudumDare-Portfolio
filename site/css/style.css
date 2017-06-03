@@ -24,6 +24,36 @@ html, body {
     font-weight: 400;
 }
 
+.sprite {
+    background-image: url(../img/games.png);
+    background-repeat: no-repeat;
+    display: block;
+}
+
+.sprite-bizbar {
+    width: 250px;
+    height: 250px;
+    background-position: -5px -5px;
+}
+
+.sprite-foobar {
+    width: 250px;
+    height: 250px;
+    background-position: -271px -5px;
+}
+
+.sprite-grillkorv {
+    width: 250px;
+    height: 250px;
+    background-position: -531px -5px;
+}
+
+.sprite-lorem {
+    width: 250px;
+    height: 250px;
+    background-position: -5px -271px;
+}
+
 header {
     background-color: #323a45;
     display: flex;
@@ -442,7 +472,7 @@ header h1 {
     padding: 10px;
 }
 
-.game-miniature img:hover {
+.game-miniature i:hover {
     opacity: 0.3;
     cursor: pointer;
 }
@@ -490,7 +520,7 @@ header h1 {
     text-align: center;
 }
 
-.article-center img {
+.article-center i {
     float: right;
     padding: 5px;
 }
